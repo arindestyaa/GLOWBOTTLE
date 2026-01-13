@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Anggota BLINK</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Menggunakan font Inter secara default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Mengatur tinggi minimum body agar gradasi terlihat penuh */
+        #app-container {
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- Kontainer Utama dengan Gradasi Pink ke Hitam/Abu-abu gelap -->
+    <div id="app-container" class="flex items-center justify-center p-4 sm:p-8 bg-gradient-to-br from-pink-600 via-rose-700 to-gray-900">
+        
+        <!-- Kartu Formulir Responsif -->
+        <div class="w-full max-w-lg bg-white p-6 sm:p-8 rounded-xl shadow-2xl transition duration-500 hover:shadow-rose-400/50">
+            
+            <!-- Header dan Logo -->
+            <div class="text-center mb-6 sm:mb-8">
+                <!-- Logo BLINK (menggunakan placeholder bertema pink/hitam) -->
+                <img src="https://placehold.co/80x80/EC4899/000000?text=BLK" 
+                     alt="Logo BLINK" 
+                     class="mx-auto h-20 w-auto mb-4 object-contain rounded-full border-4 border-rose-200 shadow-md"
+                     onerror="this.onerror=null; this.src='https://placehold.co/80x80/EC4899/000000?text=B';"
+                >
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-800 tracking-tight">
+                    Pendaftaran Anggota <span class="text-rose-600">BLINK</span>
+                </h1>
+                <p class="text-gray-500 mt-2">Isi formulir ini dengan data yang benar dan alasan yang jelas.</p>
+            </div>
+
+            <!-- Pesan Status (Sukses/Error) -->
+            <div id="status-message" class="hidden p-4 mb-4 text-sm rounded-lg border border-green-200 bg-green-50 text-green-700 font-medium" role="alert">
+                <!-- Pesan sukses akan ditampilkan di sini -->
+            </div>
+
+            <!-- Formulir Pendaftaran -->
+            <form id="dicosma-form" class="space-y-4 sm:space-y-6">
+                
+                <!-- Nama Lengkap -->
+                <div>
+                    <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="nama_lengkap" name="nama_lengkap" required 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-150" 
+                           placeholder="Masukkan nama lengkap Anda"
+                    >
+                </div>
+
+                <!-- Kelas -->
+                <div>
+                    <label for="kelas" class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
+                    <select id="kelas" name="kelas" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-150 bg-white appearance-none"
+                    >
+                        <option value="" disabled selected>Pilih Kelas Anda</option>
+                        <option value="X">Kelas X</option>
+                        <option value="XI">Kelas XI</option>
+                        <option value="XII">Kelas XII</option>
+                    </select>
+                </div>
+
+                <!-- No. Whatsapp -->
+                <div>
+                    <label for="no_whatsapp" class="block text-sm font-medium text-gray-700 mb-1">No. Whatsapp (Aktif)</label>
+                    <input type="tel" id="no_whatsapp" name="no_whatsapp" required 
+                           pattern="[0-9]{10,14}" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-150" 
+                           placeholder="Contoh: 081234567890"
+                    >
+                    <p class="text-xs text-gray-500 mt-1">Masukkan angka tanpa spasi atau tanda hubung.</p>
+                </div>
+
+                <!-- Alasan Mendaftar -->
+                <div>
+                    <label for="alasan_mendaftar" class="block text-sm font-medium text-gray-700 mb-1">Tuliskan Alasan Mendaftar BLINK</label>
+                    <textarea id="alasan_mendaftar" name="alasan_mendaftar" rows="4" required 
+                              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-150" 
+                              placeholder="Jelaskan mengapa Anda tertarik bergabung dengan BLINK..."
+                    ></textarea>
+                </div>
+
+                <!-- Tombol Submit -->
+                <div>
+                    <button type="submit" 
+                            class="w-full py-3 px-4 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-pink-600 hover:to-rose-700 transition duration-300 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-rose-300"
+                    >
+                        Daftar Sekarang
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mengambil elemen form dan pesan status
+        const form = document.getElementById('dicosma-form');
+        const statusMessage = document.getElementById('status-message');
+
+        // Fungsi untuk menampilkan pesan status
+        function showStatus(message, isSuccess = true) {
+            statusMessage.textContent = message;
+            statusMessage.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'border-red-200');
+            statusMessage.classList.remove('bg-green-50', 'text-green-700', 'border-green-200');
+            
+            if (isSuccess) {
+                statusMessage.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+            } else {
+                statusMessage.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
+            }
+
+            // Otomatis sembunyikan setelah 5 detik
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Event listener untuk pengiriman form
+        form.addEventListener('submit', function(event) {
+            // Mencegah pengiriman form default
+            event.preventDefault();
+
+            // Mengumpulkan data dari form
+            const dataPendaftar = {
+                nama_lengkap: document.getElementById('nama_lengkap').value,
+                kelas: document.getElementById('kelas').value,
+                no_whatsapp: document.getElementById('no_whatsapp').value,
+                alasan_mendaftar: document.getElementById('alasan_mendaftar').value,
+                organisasi: 'BLINK', // Menambahkan identitas organisasi
+                tanggal_daftar: new Date().toISOString()
+            };
+
+            // Log data ke konsol (Simulasi penyimpanan data. Dalam aplikasi nyata, data ini akan dikirim ke server/Firestore.)
+            console.log('--- Data Pendaftaran Anggota BLINK Baru ---');
+            console.log(dataPendaftar);
+            console.log('-------------------------------------------');
+
+            // Tampilkan pesan sukses kepada pengguna
+            showStatus('Pendaftaran untuk BLINK berhasil! Data Anda telah kami terima. Silakan cek konsol untuk melihat data yang disimulasikan.', true);
+
+            // Bersihkan form
+            form.reset();
+        });
+    </script>
+</body>
+</html>
